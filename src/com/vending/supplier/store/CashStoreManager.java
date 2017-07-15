@@ -1,5 +1,6 @@
 package com.vending.supplier.store;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import com.vending.utils.CashEnum;
 public class CashStoreManager {
 
 	public static CashStoreManager instance = null;
-	private Map<CashEnum, Cash> cashFromStore = new LinkedHashMap<CashEnum, Cash>();
+	private Map<CashEnum, Cash> cashFromStore = new HashMap<CashEnum, Cash>();
 
 	private CashStoreManager() {
 

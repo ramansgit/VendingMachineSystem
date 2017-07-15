@@ -14,7 +14,7 @@ import com.vending.model.Item;
 import com.vending.test.util.TestReadFromCsvUtil;
 import com.vending.utils.CashEnum;
 
-public class TestSupplieriInterface {
+public class TestVendingMachineiInterface {
 	SupplierApi api = new SupplierController();
 
 	public void testViewProductItemsFromStore() {
@@ -71,7 +71,7 @@ public class TestSupplieriInterface {
 				System.out.print("Enter your options : ");
 				String input = br.readLine();
 
-				TestSupplieriInterface test = new TestSupplieriInterface();
+				TestVendingMachineiInterface test = new TestVendingMachineiInterface();
 
 				if (input != null && input.equals("1")) {
 					Set<Item> items = TestReadFromCsvUtil.readProductFromCsv();
