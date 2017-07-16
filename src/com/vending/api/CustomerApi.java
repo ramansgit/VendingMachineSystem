@@ -2,6 +2,8 @@ package com.vending.api;
 
 import java.util.Map;
 
+import com.vending.exception.NotFullPaidException;
+import com.vending.exception.NotSufficientChangeException;
 import com.vending.exception.ProductExistException;
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
@@ -27,6 +29,13 @@ public interface CustomerApi {
 	 * 
 	 */
 	public abstract long viewPayableAmount();
+	
+	
+	/**
+	 * get paid amount for purchase
+	 * 
+	 */
+	public abstract long viewPaidAmount();
 
 	/**
 	 * allows customer to add product item to cart
@@ -46,7 +55,7 @@ public interface CustomerApi {
 	/** 
 	 * allows customer to collect item and change if any for the purchase
 	 */
-	public abstract void collectItemAndChange();
+	public abstract void collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException;
 
 	/**
 	 * allows customer to cancel purchase and gets refund

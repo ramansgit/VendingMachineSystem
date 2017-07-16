@@ -19,7 +19,7 @@ public class CashCollector {
 	/**
 	 * collects user cash for the transaction
 	 */
-	private Map<CashEnum,Integer> userCashStore = new HashMap<CashEnum,Integer>();
+	private Map<CashEnum, Integer> userCashStore = new HashMap<CashEnum, Integer>();
 
 	private CashCollector() {
 
@@ -42,7 +42,7 @@ public class CashCollector {
 	 * 
 	 * @return
 	 */
-	public Map<CashEnum,Integer> getCashFromUserStore() {
+	public Map<CashEnum, Integer> getCashFromUserStore() {
 		return userCashStore;
 	}
 
@@ -51,7 +51,7 @@ public class CashCollector {
 	 * 
 	 * @param item
 	 */
-	public void addCashToUserStore(CashEnum cash,int count) {
+	public void addCashToUserStore(CashEnum cash, int count) {
 		userCashStore.put(cash, count);
 	}
 
@@ -62,27 +62,24 @@ public class CashCollector {
 		userCashStore.clear();
 	}
 
-	
 	/**
 	 * find the total amount user paid for the purchase
 	 * 
 	 * @return
 	 */
-//	public long getTotalPaidAmount() {
-//		long total = 0;
-//		if (selectedCart != null) {
-//			Set<String> keys = selectedCart.keySet();
-//			for (String key : keys) {
-//				Item it = selectedCart.get(key);
-//				if (it != null) {
-//					int qty = it.getQty();
-//					int price = it.getPrice();
-//					total = total + (qty * price);
-//				}
-//			}
-//		}
-//		return total;
-//	}
-	
+	public long getTotalPaidAmount() {
+		long total = 0;
+		if (userCashStore != null) {
+			Set<CashEnum> keys = userCashStore.keySet();
+			for (CashEnum key : keys) {
+				Integer count = userCashStore.get(key);
+				if (count != null) {
+					int denomaination = key.getValue();
+					total = total + (count * denomaination);
+				}
+			}
+		}
+		return total;
+	}
 
 }

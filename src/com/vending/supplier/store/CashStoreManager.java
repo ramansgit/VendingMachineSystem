@@ -54,6 +54,14 @@ public class CashStoreManager {
 		}
 
 	}
+	
+	public boolean hasDenomiationInCashStore(CashEnum type){
+		if(type !=null){
+			
+		}
+		
+		return false;
+	}
 
 	/**
 	 * reset cash store
@@ -61,7 +69,8 @@ public class CashStoreManager {
 	public void resetCash() {
 		cashFromStore.clear();
 	}
-
+	
+	
 	public static void main(String[] args) {
 		CashEnum[] valu = CashEnum.values();
 		for (CashEnum cas : valu) {

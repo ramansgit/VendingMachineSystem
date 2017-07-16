@@ -6,6 +6,8 @@ import com.vending.agent.StoreDispenserAgentImpl;
 import com.vending.api.CustomerApi;
 import com.vending.customer.cart.CashCollector;
 import com.vending.customer.cart.SelectedItemsCart;
+import com.vending.exception.NotFullPaidException;
+import com.vending.exception.NotSufficientChangeException;
 import com.vending.exception.ProductExistException;
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
@@ -87,22 +89,42 @@ public class CustomerController implements CustomerApi {
 
 	/**
 	 * when user confirms to complete the purchase this will be invoked
+	 * 
+	 * @throws NotFullPaidException
 	 */
 
 	@Override
-	public void collectItemAndChange() {
+	public void collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException {
 
-		// check amount paid is < than payable return exception
-		long total = selectedCart.getPayableAmount();
+		long purchaseTotal = selectedCart.getPayableAmount();
+		long paidTotal = cashCollector.getTotalPaidAmount();
 
-		// if amount paid == payable return item and invoke dispenser for
+		if (paidTotal >= purchaseTotal) {// paid >= purchase return change if
+											// available else return change not
+											// available exception
+			long changeAmount = paidTotal - purchaseTotal;
+			if (storeAgent.hasSufficientChangeForAmount(changeAmount)) {
+				// if change available return item and change
+			} else {
+				// else return exception change not available ask user to
+				// purchase
+				// something or ask for refund
+				throw new NotSufficientChangeException("Not Sufficient change in Inventory");
+			}
+		} else {// check amount paid is < than
+				// payable return exception
+			long balance = purchaseTotal - paidTotal;
+			throw new NotFullPaidException("Price not full paid, remaining : ", balance);
+		}
 
-		// if amount paid > payable then check change
-		// if change available return item and change
+	}
 
-		// else return exception change not available ask user to purchase
-		// something or ask for refund
-
+	/**
+	 * allows customer to see the amount for the purchase
+	 */
+	@Override
+	public long viewPaidAmount() {
+		return cashCollector.getTotalPaidAmount();
 	}
 
 }
