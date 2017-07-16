@@ -57,12 +57,6 @@ public interface CustomerApi {
 	 */
 	public abstract void updateSelectedItemQty(String productId,int qty);
 	
-	/**
-	 * allows customer to update selected product price
-	 * 
-	 * @return
-	 */
-	public abstract void updateSelectedItemPrice(String productId,int price);
 	
 	
 	/**
@@ -77,13 +71,13 @@ public interface CustomerApi {
 	 * 
 	 * @return
 	 */
-	public abstract void insertCashForPurchase(CashEnum denomination,int amount);
+	public abstract void insertCashForPurchase(CashEnum denomination,int count);
 	
 	
 	/** 
 	 * allows customer to collect item and change if any for the purchase
 	 */
-	public abstract DispenseItemAndChange collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException;
+	public abstract DispenseItemAndChange confirmPurchase() throws NotFullPaidException, NotSufficientChangeException;
 
 	/**
 	 * allows customer to cancel purchase and gets refund

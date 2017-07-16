@@ -40,7 +40,7 @@ public interface SupplierApi {
 	/**
 	 * allows supplier to add denominations to the case store
 	 */
-	public abstract void addCashWithDenominations(CashEnum casg,int count);
+	public abstract void addCashDenominations(CashEnum casg,int count);
 	
 	
 	/** 

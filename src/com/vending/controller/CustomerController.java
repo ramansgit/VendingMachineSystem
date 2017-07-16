@@ -82,8 +82,8 @@ public class CustomerController implements CustomerApi {
 	 * allows user to pay for the purchase
 	 */
 	@Override
-	public void insertCashForPurchase(CashEnum denomination, int amountPaid) {
-		cashCollector.addCashToUserStore(denomination, amountPaid);
+	public void insertCashForPurchase(CashEnum denomination, int count) {
+		cashCollector.addCashToUserStore(denomination, count);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class CustomerController implements CustomerApi {
 	 */
 
 	@Override
-	public DispenseItemAndChange collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException {
+	public DispenseItemAndChange confirmPurchase() throws NotFullPaidException, NotSufficientChangeException {
 
 		int purchaseTotal = selectedCart.getPayableAmount();
 		int paidTotal = cashCollector.getTotalPaidAmount();
@@ -156,21 +156,7 @@ public class CustomerController implements CustomerApi {
 		return cashCollector.getTotalPaidAmount();
 	}
 
-	/**
-	 * allows customer to update price for an item in the selection cart
-	 */
 
-	public void updateSelectedItemPrice(String productId, int price) {
-		if (productId != null && !productId.isEmpty()) {
-
-			Item it = selectedCart.getSelectedItemsFromCart().get(productId);
-			if (it != null) {
-				it.setPrice(price);
-				selectedCart.getSelectedItemsFromCart().put(productId, it);
-			}
-		}
-
-	}
 
 	/**
 	 * allows customer to update qty for an item in the selectioncart

@@ -64,7 +64,7 @@ public class SupplierController implements SupplierApi {
 	 * add cash to the system with denominations
 	 */
 	@Override
-	public void addCashWithDenominations(CashEnum cash, int count) {
+	public void addCashDenominations(CashEnum cash, int count) {
 		cashManager.addCashToStore(cash, count);
 	}
 
