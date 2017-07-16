@@ -1,4 +1,4 @@
-package com.vending.test.util;
+package com.vending.test;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

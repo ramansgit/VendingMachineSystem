@@ -3,7 +3,6 @@ package com.vending.controller;
 import java.util.Map;
 
 import com.vending.api.SupplierApi;
-import com.vending.exception.ProductExistException;
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
 import com.vending.supplier.store.CashStoreManager;
@@ -39,6 +38,7 @@ public class SupplierController implements SupplierApi {
 		itemManger = ProductStoreManager.getInstance();
 		cashManager = CashStoreManager.getInstance();
 		purchaseStatement = PurchaseStoreManager.getInstance();
+		resetStore();
 	}
 
 	/**
@@ -51,10 +51,11 @@ public class SupplierController implements SupplierApi {
 
 	/**
 	 * add product to the store
-	 * @throws ProductExistException 
+	 * 
+	 * @throws ProductExistException
 	 */
 	@Override
-	public void addProductItemToStore(Item item) throws ProductExistException {
+	public void addProductItemToStore(Item item) {
 		itemManger.addItemToStore(item);
 	}
 
@@ -62,8 +63,8 @@ public class SupplierController implements SupplierApi {
 	 * add cash to the system with denominations
 	 */
 	@Override
-	public void addCashWithDenominations(CashEnum cash,int count)  {
-		cashManager.addCashToStore(cash,count);
+	public void addCashWithDenominations(CashEnum cash, int count) {
+		cashManager.addCashToStore(cash, count);
 	}
 
 	/**
@@ -92,6 +93,38 @@ public class SupplierController implements SupplierApi {
 	@Override
 	public Map<CashEnum, Integer> viewCashDenominations() {
 		return cashManager.getCashFromStore();
+	}
+
+	/**
+	 * supplier updates the price for the product
+	 */
+	@Override
+	public void updateProductPrice(String productId, int price) {
+		if (productId != null && !productId.isEmpty()) {
+
+			Item it = itemManger.getItemsFromStore().get(productId);
+			if (it != null) {
+				it.setPrice(price);
+				itemManger.getItemsFromStore().put(productId, it);
+			}
+		}
+
+	}
+
+	/**
+	 * supplier updates the qty for product
+	 */
+	@Override
+	public void updateProductQty(String productId, int qty) {
+		if (productId != null && !productId.isEmpty()) {
+
+			Item it = itemManger.getItemsFromStore().get(productId);
+			if (it != null) {
+				it.setQty(qty);
+				itemManger.getItemsFromStore().put(productId, it);
+			}
+		}
+
 	}
 
 }

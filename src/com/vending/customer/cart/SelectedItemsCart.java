@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.vending.exception.ProductExistException;
 import com.vending.model.Item;
 
 /**
@@ -53,14 +52,12 @@ public class SelectedItemsCart {
 	 * @param item
 	 */
 
-	public void addItemToSelectionCart(Item item) throws ProductExistException {
+	public void addItemToSelectionCart(Item item)  {
 		if (item != null) {
 			if (item.getProductId() != null && !item.getProductId().isEmpty()) {
 				if (!hasProductItem(item.getProductId())) {
 					selectedCart.put(item.getProductId(), item);
-				} else {
-					throw new ProductExistException("Can't add Duplicate products");
-				}
+				} 
 
 			}
 		}
@@ -85,8 +82,8 @@ public class SelectedItemsCart {
 	 * 
 	 * @return
 	 */
-	public long getPayableAmount() {
-		long total = 0;
+	public int getPayableAmount() {
+		int total = 0;
 		if (selectedCart != null) {
 			Set<String> keys = selectedCart.keySet();
 			for (String key : keys) {

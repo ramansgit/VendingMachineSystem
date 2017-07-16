@@ -1,7 +1,9 @@
 package com.vending.supplier.store;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.vending.model.CashEnum;
 
@@ -15,7 +17,7 @@ import com.vending.model.CashEnum;
 public class CashStoreManager {
 
 	public static CashStoreManager instance = null;
-	private Map<CashEnum, Integer> cashFromStore = new HashMap<CashEnum, Integer>();
+	private Map<CashEnum, Integer> cashFromStore = new TreeMap<CashEnum, Integer>(Collections.reverseOrder());
 
 	private CashStoreManager() {
 
@@ -55,13 +57,18 @@ public class CashStoreManager {
 
 	}
 	
-	public boolean hasDenomiationInCashStore(CashEnum type){
-		if(type !=null){
-			
+	/**
+	 * update cash and denominations to store ** when change is returned or when user cash transfered to store
+	 * 
+	 * @param item
+	 */
+	public void updateCashInStore(CashEnum cash,int count) {
+		if (cash != null) {
+			cashFromStore.put(cash, count);
 		}
-		
-		return false;
+
 	}
+
 
 	/**
 	 * reset cash store

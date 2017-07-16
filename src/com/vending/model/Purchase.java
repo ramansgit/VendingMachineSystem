@@ -1,7 +1,7 @@
 package com.vending.model;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * Pojo class carries purchase summary
@@ -22,7 +22,7 @@ public class Purchase {
 	/**
 	 * purchased items
 	 */
-	private Set<Item> purchasedItems;
+	private Map<String,Item> purchasedItems;
 
 	/**
 	 * total amount
@@ -45,11 +45,11 @@ public class Purchase {
 		this.createDate = createDate;
 	}
 
-	public Set<Item> getPurchasedItems() {
+	public Map<String,Item> getPurchasedItems() {
 		return purchasedItems;
 	}
 
-	public void setPurchasedItems(Set<Item> purchasedItems) {
+	public void setPurchasedItems(Map<String,Item> purchasedItems) {
 		this.purchasedItems = purchasedItems;
 	}
 

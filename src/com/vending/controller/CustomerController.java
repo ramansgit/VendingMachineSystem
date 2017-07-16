@@ -1,6 +1,8 @@
 package com.vending.controller;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import com.vending.agent.StoreDispenserAgentImpl;
 import com.vending.api.CustomerApi;
@@ -8,9 +10,10 @@ import com.vending.customer.cart.CashCollector;
 import com.vending.customer.cart.SelectedItemsCart;
 import com.vending.exception.NotFullPaidException;
 import com.vending.exception.NotSufficientChangeException;
-import com.vending.exception.ProductExistException;
 import com.vending.model.CashEnum;
+import com.vending.model.DispenseItemAndChange;
 import com.vending.model.Item;
+import com.vending.model.Purchase;
 
 /**
  * allows customer to perform actions, view products add products to cart add
@@ -32,8 +35,19 @@ public class CustomerController implements CustomerApi {
 		selectedCart = SelectedItemsCart.getInstance();
 		cashCollector = CashCollector.getInstance();
 		storeAgent = new StoreDispenserAgentImpl();
+		//initalize customer store
+		initalize();
 	}
-
+	
+	/**
+	 * initalize customer store
+	 */
+	private void initalize(){
+		selectedCart.resetSelectionCart();
+		cashCollector.resetUserCashStore();
+	}
+	
+	
 	/**
 	 * allows customer to view available products from the store
 	 */
@@ -51,7 +65,7 @@ public class CustomerController implements CustomerApi {
 	}
 
 	@Override
-	public long viewPayableAmount() {
+	public int viewPayableAmount() {
 		return selectedCart.getPayableAmount();
 	}
 
@@ -59,7 +73,7 @@ public class CustomerController implements CustomerApi {
 	 * allows user to add items to selection cart
 	 */
 	@Override
-	public void addSelectedItemsToCart(Item item) throws ProductExistException {
+	public void addSelectedItemsToCart(Item item) {
 		selectedCart.addItemToSelectionCart(item);
 
 	}
@@ -94,17 +108,31 @@ public class CustomerController implements CustomerApi {
 	 */
 
 	@Override
-	public void collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException {
+	public DispenseItemAndChange collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException {
 
-		long purchaseTotal = selectedCart.getPayableAmount();
-		long paidTotal = cashCollector.getTotalPaidAmount();
-
+		int purchaseTotal = selectedCart.getPayableAmount();
+		int paidTotal = cashCollector.getTotalPaidAmount();
+		Map<String, Item> dispenseItem = null;
+		Map<CashEnum, Integer> dispenseChange = null;
+		DispenseItemAndChange dispense = null;
+		Purchase statement = new Purchase();
 		if (paidTotal >= purchaseTotal) {// paid >= purchase return change if
 											// available else return change not
 											// available exception
-			long changeAmount = paidTotal - purchaseTotal;
+			int changeAmount = paidTotal - purchaseTotal;
 			if (storeAgent.hasSufficientChangeForAmount(changeAmount)) {
 				// if change available return item and change
+				dispenseItem = storeAgent.dispenseItemsFromStore(selectedCart.getSelectedItemsFromCart());
+				dispenseChange = storeAgent.dispenseChangeFromStore(changeAmount);
+				storeAgent.dispenseUserCashToStore(cashCollector.getCashFromUserStore());
+				// capture purchase summary
+				statement.setCreateDate(new Date());
+				statement.setTotalAmout(selectedCart.getPayableAmount());
+				statement.setPurchasedItems(selectedCart.getSelectedItemsFromCart());
+				statement.setTransactionId(UUID.randomUUID().toString());
+				storeAgent.addPurchaseSummaryToStore(statement);
+				dispense = new DispenseItemAndChange(dispenseChange, dispenseItem);
+
 			} else {
 				// else return exception change not available ask user to
 				// purchase
@@ -117,13 +145,14 @@ public class CustomerController implements CustomerApi {
 			throw new NotFullPaidException("Price not full paid, remaining : ", balance);
 		}
 
+		return dispense;
 	}
 
 	/**
 	 * allows customer to see the amount for the purchase
 	 */
 	@Override
-	public long viewPaidAmount() {
+	public int viewPaidAmount() {
 		return cashCollector.getTotalPaidAmount();
 	}
 

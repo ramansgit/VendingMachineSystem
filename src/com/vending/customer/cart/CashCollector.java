@@ -1,8 +1,10 @@
 package com.vending.customer.cart;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
@@ -19,7 +21,7 @@ public class CashCollector {
 	/**
 	 * collects user cash for the transaction
 	 */
-	private Map<CashEnum, Integer> userCashStore = new HashMap<CashEnum, Integer>();
+	private Map<CashEnum, Integer> userCashStore = new TreeMap<CashEnum, Integer>(Collections.reverseOrder());
 
 	private CashCollector() {
 
@@ -67,8 +69,8 @@ public class CashCollector {
 	 * 
 	 * @return
 	 */
-	public long getTotalPaidAmount() {
-		long total = 0;
+	public int getTotalPaidAmount() {
+		int total = 0;
 		if (userCashStore != null) {
 			Set<CashEnum> keys = userCashStore.keySet();
 			for (CashEnum key : keys) {

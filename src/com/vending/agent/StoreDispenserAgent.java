@@ -2,6 +2,7 @@ package com.vending.agent;
 
 import java.util.Map;
 
+import com.vending.exception.NotSufficientChangeException;
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
 import com.vending.model.Purchase;
@@ -28,24 +29,24 @@ public interface StoreDispenserAgent {
 	/**
 	 * returns items from product store to consumer
 	 */
-	public abstract void dispenseItemsFromStore(Map<String, Item> selectedCartItems);
+	public abstract Map<String, Item> dispenseItemsFromStore(Map<String, Item> selectedCartItems);
 
 	/**
 	 * dispense change from cash store to consumer
 	 */
-	public abstract Map<CashEnum, Integer> dispenseChangeFromStore(long changeAmount);
+	public abstract Map<CashEnum, Integer> dispenseChangeFromStore(int changeAmount)throws NotSufficientChangeException ;
 
 	/**
 	 * returns true if sufficient change found , else returns false if no change found
 	 * @param changeAmount
 	 * @return
 	 */
-	public abstract boolean hasSufficientChangeForAmount(long changeAmount);
+	public abstract boolean hasSufficientChangeForAmount(int changeAmount);
 	
 	/**
 	 * transfers user cash to supplier cash store
 	 */
-	public abstract Map<CashEnum, Integer> dispenseUserCashToStore(Map<CashEnum, Integer> usercash);
+	public abstract void dispenseUserCashToStore(Map<CashEnum, Integer> usercash);
 
 	/**
 	 * add purchase summary once transaction completed by consumer. this will be

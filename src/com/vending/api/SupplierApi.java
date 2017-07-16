@@ -2,10 +2,14 @@ package com.vending.api;
 
 import java.util.Map;
 
-import com.vending.exception.ProductExistException;
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
 
+/**
+ * interaction between supplier and system are captured here.
+ * @author ramans
+ *
+ */
 public interface SupplierApi {
 	
 	/**
@@ -18,7 +22,19 @@ public interface SupplierApi {
 	 * allows supplier to add product to the item store
 	 * @param item
 	 */
-	public abstract void addProductItemToStore(Item item) throws ProductExistException;
+	public abstract void addProductItemToStore(Item item);
+	
+	/**
+	 * allows supplier to update product price
+	 * @param item
+	 */
+	public abstract void updateProductPrice(String productId,int price);
+	
+	/**
+	 * allows supplier to update product qty
+	 * @param item
+	 */
+	public abstract void updateProductQty(String productId,int qty);
 	
 	
 	/**

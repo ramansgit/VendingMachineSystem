@@ -4,10 +4,15 @@ import java.util.Map;
 
 import com.vending.exception.NotFullPaidException;
 import com.vending.exception.NotSufficientChangeException;
-import com.vending.exception.ProductExistException;
 import com.vending.model.CashEnum;
+import com.vending.model.DispenseItemAndChange;
 import com.vending.model.Item;
 
+/**
+ * interaction between customer and system interface are captured here.
+ * @author ramans
+ *
+ */
 public interface CustomerApi {
 
 	/**
@@ -28,21 +33,21 @@ public interface CustomerApi {
 	 * get payable amount from selected item cart
 	 * 
 	 */
-	public abstract long viewPayableAmount();
+	public abstract int viewPayableAmount();
 	
 	
 	/**
 	 * get paid amount for purchase
 	 * 
 	 */
-	public abstract long viewPaidAmount();
+	public abstract int viewPaidAmount();
 
 	/**
 	 * allows customer to add product item to cart
 	 * 
 	 * @return
 	 */
-	public abstract void addSelectedItemsToCart(Item item) throws ProductExistException;
+	public abstract void addSelectedItemsToCart(Item item);
 
 	/**
 	 * allows customer to pay for the purchase
@@ -55,7 +60,7 @@ public interface CustomerApi {
 	/** 
 	 * allows customer to collect item and change if any for the purchase
 	 */
-	public abstract void collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException;
+	public abstract DispenseItemAndChange collectItemAndChange() throws NotFullPaidException, NotSufficientChangeException;
 
 	/**
 	 * allows customer to cancel purchase and gets refund

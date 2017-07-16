@@ -8,10 +8,8 @@ import java.util.Set;
 
 import com.vending.api.SupplierApi;
 import com.vending.controller.SupplierController;
-import com.vending.exception.ProductExistException;
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
-import com.vending.test.util.TestReadFromCsvUtil;
 
 public class TestVendingMachineiInterface {
 	SupplierApi api = new SupplierController();
@@ -26,7 +24,7 @@ public class TestVendingMachineiInterface {
 		System.out.println("available cash denominations are \n" + cash);
 	}
 
-	public void testAddProductItemToStore(Item item) throws ProductExistException {
+	public void testAddProductItemToStore(Item item) {
 		api.addProductItemToStore(item);
 
 	}
@@ -75,11 +73,8 @@ public class TestVendingMachineiInterface {
 				if (input != null && input.equals("1")) {
 					Set<Item> items = TestReadFromCsvUtil.readProductFromCsv();
 					for (Item it : items) {
-						try {
 							test.testAddProductItemToStore(it);
-						} catch (ProductExistException e) {
-							e.printStackTrace();
-						}
+						 
 					}
 					System.out.println("products added successfully");
 				}

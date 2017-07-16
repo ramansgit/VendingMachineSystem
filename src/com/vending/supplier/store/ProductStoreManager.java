@@ -3,7 +3,6 @@ package com.vending.supplier.store;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.vending.exception.ProductExistException;
 import com.vending.model.Item;
 
 /**
@@ -51,14 +50,12 @@ public class ProductStoreManager {
 	 * @param item
 	 * @throws ProductExistException
 	 */
-	public void addItemToStore(Item item) throws ProductExistException {
+	public void addItemToStore(Item item) {
 		if (item != null) {
 			if (item.getProductId() != null && !item.getProductId().isEmpty()) {
 				if (!hasProductItem(item.getProductId())) {
 					itemsFromStore.put(item.getProductId(), item);
-				} else {
-					throw new ProductExistException("Can't add Duplicate products");
-				}
+				} 
 
 			}
 		}
