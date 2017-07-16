@@ -6,44 +6,98 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.Set;
 
+import com.vending.api.CustomerApi;
 import com.vending.api.SupplierApi;
 import com.vending.controller.SupplierController;
+import com.vending.exception.NotFullPaidException;
+import com.vending.exception.NotSufficientChangeException;
 import com.vending.model.CashEnum;
+import com.vending.model.DispenseItemAndChange;
 import com.vending.model.Item;
 
 public class TestVendingMachineiInterface {
-	SupplierApi api = new SupplierController();
+	SupplierApi supplier = new SupplierController();
 
 	public void testViewProductItemsFromStore() {
-		Map<String, Item> items = api.viewProductItemsFromStore();
+		Map<String, Item> items = supplier.viewProductItemsFromStore();
 		System.out.println("available products are \n" + items);
 	}
 
 	public void testViewCashDenominationsFromStore() {
-		Map<CashEnum, Integer> cash = api.viewCashDenominations();
+		Map<CashEnum, Integer> cash = supplier.viewCashDenominations();
 		System.out.println("available cash denominations are \n" + cash);
 	}
 
 	public void testAddProductItemToStore(Item item) {
-		api.addProductItemToStore(item);
+		supplier.addProductItemToStore(item);
 
 	}
 
 	public void testAddCashWithDenominations(CashEnum cash, int count) {
-		api.addCashWithDenominations(cash, count);
+		supplier.addCashWithDenominations(cash, count);
 
 	}
 
 	public void testViewPurchaseHistory() {
-		api.viewPurchaseHistory();
+		supplier.viewPurchaseHistory();
 		System.out.println("view purchase statement \n");
 
 	}
 
 	public void testResetStore() {
-		api.resetStore();
+		supplier.resetStore();
 		System.out.println("store reset successfully");
 	}
+	
+	
+	/**
+	 * customer api 
+	 * @param args
+	 */
+	
+	
+	public Map<String, Item> testViewProductItemsFromStore1() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Item> testViewSelectedItemsFromCart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int testViewPayableAmount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int testViewPaidAmount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+	public void testAddSelectedItemsToCart(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	public void testInsertCashForPurchase(CashEnum denomination, int amount) {
+	
+		
+	}
+
+	public DispenseItemAndChange testCollectItemAndChange() throws NotFullPaidException, NotSufficientChangeException {
+		
+		return null;
+	}
+
+	public Map<CashEnum, Integer> testCancelItemsFromCartAndRefund() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	public static void main(String[] args) {
 
@@ -55,7 +109,24 @@ public class TestVendingMachineiInterface {
 		System.out.println("Press option 4 for viewing cash denominations and qty from store");
 		System.out.println("Press option 5 for viewing purchase history");
 		System.out.println("Press option 6 for reset");
+		
+		
+		System.out.println("*** Customer Menu ***");
+
+		System.out.println("Press option 7 for view product from store");
+		System.out.println("Press option 8 for view selected item from cart");
+		System.out.println("Press option 9 for viewing available products");
+		System.out.println("Press option 10 for viewing cash denominations and qty from store");
+		System.out.println("Press option 11 for viewing purchase history");
+		System.out.println("Press option 12 for reset");
+		System.out.println("Press option 13 for reset");
+		System.out.println("Press option 14 for reset");
+		
+		System.out.println("Press option 13 for stop");
+		
+		
 		System.out.println("Press option 7 for stop");
+		
 
 		BufferedReader br = null;
 
@@ -123,4 +194,5 @@ public class TestVendingMachineiInterface {
 
 	}
 
+	
 }

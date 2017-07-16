@@ -1,5 +1,6 @@
 package com.vending.controller;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import com.vending.api.SupplierApi;
@@ -122,6 +123,23 @@ public class SupplierController implements SupplierApi {
 			if (it != null) {
 				it.setQty(qty);
 				itemManger.getItemsFromStore().put(productId, it);
+			}
+		}
+
+	}
+
+	/**
+	 * removes an item from the product store
+	 */
+	@Override
+	public void removeItemFromStore(String productId) {
+		if (productId != null && !productId.isEmpty()) {
+			for (Iterator<Map.Entry<String, Item>> it = itemManger.getItemsFromStore().entrySet().iterator(); it
+					.hasNext();) {
+				Map.Entry<String, Item> entry = it.next();
+				if (entry.getKey().equalsIgnoreCase(productId)) {
+					it.remove();
+				}
 			}
 		}
 

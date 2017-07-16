@@ -1,6 +1,7 @@
 package com.vending.controller;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -35,19 +36,18 @@ public class CustomerController implements CustomerApi {
 		selectedCart = SelectedItemsCart.getInstance();
 		cashCollector = CashCollector.getInstance();
 		storeAgent = new StoreDispenserAgentImpl();
-		//initalize customer store
+		// initalize customer store
 		initalize();
 	}
-	
+
 	/**
 	 * initalize customer store
 	 */
-	private void initalize(){
+	private void initalize() {
 		selectedCart.resetSelectionCart();
 		cashCollector.resetUserCashStore();
 	}
-	
-	
+
 	/**
 	 * allows customer to view available products from the store
 	 */
@@ -154,6 +154,55 @@ public class CustomerController implements CustomerApi {
 	@Override
 	public int viewPaidAmount() {
 		return cashCollector.getTotalPaidAmount();
+	}
+
+	/**
+	 * allows customer to update price for an item in the selection cart
+	 */
+
+	public void updateSelectedItemPrice(String productId, int price) {
+		if (productId != null && !productId.isEmpty()) {
+
+			Item it = selectedCart.getSelectedItemsFromCart().get(productId);
+			if (it != null) {
+				it.setPrice(price);
+				selectedCart.getSelectedItemsFromCart().put(productId, it);
+			}
+		}
+
+	}
+
+	/**
+	 * allows customer to update qty for an item in the selectioncart
+	 */
+	@Override
+	public void updateSelectedItemQty(String productId, int qty) {
+		if (productId != null && !productId.isEmpty()) {
+
+			Item it = selectedCart.getSelectedItemsFromCart().get(productId);
+			if (it != null) {
+				it.setQty(qty);
+				selectedCart.getSelectedItemsFromCart().put(productId, it);
+			}
+		}
+
+	}
+
+	/**
+	 * removes an item from the selected item cart store
+	 */
+	@Override
+	public void removeSelectedItemFromCart(String productId) {
+		if (productId != null && !productId.isEmpty()) {
+			for (Iterator<Map.Entry<String, Item>> it = selectedCart.getSelectedItemsFromCart().entrySet()
+					.iterator(); it.hasNext();) {
+				Map.Entry<String, Item> entry = it.next();
+				if (entry.getKey().equalsIgnoreCase(productId)) {
+					it.remove();
+				}
+			}
+		}
+
 	}
 
 }

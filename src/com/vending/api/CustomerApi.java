@@ -48,6 +48,29 @@ public interface CustomerApi {
 	 * @return
 	 */
 	public abstract void addSelectedItemsToCart(Item item);
+	
+	
+	/**
+	 * allows customer to update selected product qty
+	 * 
+	 * @return
+	 */
+	public abstract void updateSelectedItemQty(String productId,int qty);
+	
+	/**
+	 * allows customer to update selected product price
+	 * 
+	 * @return
+	 */
+	public abstract void updateSelectedItemPrice(String productId,int price);
+	
+	
+	/**
+	 * allows customer to delete selected product 
+	 * 
+	 * @return
+	 */
+	public abstract void removeSelectedItemFromCart(String productId);
 
 	/**
 	 * allows customer to pay for the purchase

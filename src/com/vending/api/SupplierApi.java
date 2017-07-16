@@ -57,4 +57,10 @@ public interface SupplierApi {
 	 * allows supplier to reset items, cash and purchase history from store
 	 */
 	public abstract void resetStore();
+	
+	/**
+	 * allows supplier to remove an item from the store
+	 * @param productId
+	 */
+	public abstract void removeItemFromStore(String productId);
 }
