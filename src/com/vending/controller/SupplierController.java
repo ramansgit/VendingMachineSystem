@@ -39,7 +39,7 @@ public class SupplierController implements SupplierApi {
 		itemManger = ProductStoreManager.getInstance();
 		cashManager = CashStoreManager.getInstance();
 		purchaseStatement = PurchaseStoreManager.getInstance();
-		resetStore();
+
 	}
 
 	/**
@@ -103,11 +103,16 @@ public class SupplierController implements SupplierApi {
 	public void updateProductPrice(String productId, int price) {
 		if (productId != null && !productId.isEmpty()) {
 
-			Item it = itemManger.getItemsFromStore().get(productId);
-			if (it != null) {
-				it.setPrice(price);
-				itemManger.getItemsFromStore().put(productId, it);
+			System.out.println(itemManger.getItemsFromStore());
+			if (itemManger.hasProductItem(productId)) {
+				System.out.println("updating product price");
+				Item it = itemManger.getProduct(productId);
+				if (it != null) {
+					it.setPrice(price);
+					itemManger.getItemsFromStore().put(productId, it);
+				}
 			}
+
 		}
 
 	}
@@ -119,11 +124,16 @@ public class SupplierController implements SupplierApi {
 	public void updateProductQty(String productId, int qty) {
 		if (productId != null && !productId.isEmpty()) {
 
-			Item it = itemManger.getItemsFromStore().get(productId);
-			if (it != null) {
-				it.setQty(qty);
-				itemManger.getItemsFromStore().put(productId, it);
+			System.out.println(itemManger.getItemsFromStore());
+			if (itemManger.hasProductItem(productId)) {
+				System.out.println("updating product price");
+				Item it = itemManger.getProduct(productId);
+				if (it != null) {
+					it.setQty(qty);
+					itemManger.getItemsFromStore().put(productId, it);
+				}
 			}
+
 		}
 
 	}

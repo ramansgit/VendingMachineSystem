@@ -49,7 +49,7 @@ public class TestSupplierInterface {
 	}
 
 	public void updateProductQty(String productId, int qty) {
-		supplier.updateProductPrice(productId, qty);
+		supplier.updateProductQty(productId, qty);
 
 	}
 
@@ -67,19 +67,28 @@ public class TestSupplierInterface {
 		Integer input = Integer.parseInt(val);
 		TestSupplierInterface test = new TestSupplierInterface();
 		if (input == 1) {
-			Set<Item> items = TestReadFromCsvUtil.readProductFromCsv();
-			for (Item it : items) {
+			Map<String, Item> items = TestReadFromCsvUtil.readProductFromCsv();
+			Set<String> keys = items.keySet();
+			for (String key : keys) {
+				Item it = items.get(key);
+				String produtId = it.getProductId();
+				String name = it.getName();
+				produtId = produtId.replaceAll("^\"|\"$", "");
+				name = name.replaceAll("^\"|\"$", "");
+				it.setProductId(produtId);
+				it.setName(name);
 				test.testAddProductItemToStore(it);
-
 			}
 			System.out.println("products added successfully");
 		}
 		if (input == 2) {
 			Map<CashEnum, Integer> cashItems = TestReadFromCsvUtil.readCashAndDenominationsFromCsv();
 
+			System.out.println(cashItems);
 			Set<CashEnum> keys = cashItems.keySet();
 			for (CashEnum it : keys) {
 				try {
+					System.out.println(cashItems.get(it));
 					test.testAddCashDenominations(it, cashItems.get(it));
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -104,7 +113,7 @@ public class TestSupplierInterface {
 			System.out.println("product price updated successfully for AA");
 		}
 		if (input == 8) {
-			updateProductQty("AA", 8);
+			updateProductQty("AA", 4);
 			System.out.println("product qty updated successfully for AA");
 		}
 
@@ -112,7 +121,6 @@ public class TestSupplierInterface {
 			removeItemFromStore("AA");
 			System.out.println("product AA removed successfully");
 		}
-		
 
 	}
 

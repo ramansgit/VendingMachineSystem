@@ -14,9 +14,9 @@ import com.vending.model.Item;
 
 public class TestReadFromCsvUtil {
 
-	public static Set<Item> readProductFromCsv() {
+	public static Map<String,Item> readProductFromCsv() {
 		String csvFile = "/Users/ramans/Documents/workspace-vendingmachine/VendingMachineSystem/product.csv";
-		Set<Item> productStore = new HashSet<Item>();
+		Map<String,Item> productStore = new HashMap<String,Item>();
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
@@ -29,13 +29,13 @@ public class TestReadFromCsvUtil {
 				// use comma as separator
 				String[] products = line.split(cvsSplitBy);
 				Item it = new Item();
-				it.setProductId(products[0]);
+				it.setProductId(products[0].toString());
 				it.setName(products[1]);
 				it.setPrice(Integer.parseInt(products[2]));
 				it.setQty(Integer.parseInt(products[3]));
 
-				productStore.add(it);
-				System.out.println(it);
+				productStore.put(it.getProductId(),it);
+				//System.out.println(it);
 			}
 
 		} catch (FileNotFoundException e) {

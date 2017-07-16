@@ -17,7 +17,7 @@ import com.vending.model.Purchase;
  * @author ramans
  *
  */
-public interface StoreDispenserAgent {
+public interface DispenserApi {
 
 	/**
 	 * allows customer to see products vis ConsumerDispenserApi

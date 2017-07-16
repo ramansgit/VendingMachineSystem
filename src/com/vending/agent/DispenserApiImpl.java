@@ -13,7 +13,6 @@ import com.vending.model.Purchase;
 import com.vending.supplier.store.CashStoreManager;
 import com.vending.supplier.store.ProductStoreManager;
 import com.vending.supplier.store.PurchaseStoreManager;
-import com.vending.test.TestChangeReturnAlgorithm;
 
 /**
  * This agent acts as middle man between consumer store and supplier store.
@@ -24,13 +23,13 @@ import com.vending.test.TestChangeReturnAlgorithm;
  * 
  * @author ramans
  */
-public class StoreDispenserAgentImpl implements StoreDispenserAgent {
+public class DispenserApiImpl implements DispenserApi {
 
 	CashStoreManager cashManager = null;
 	ProductStoreManager productManager = null;
 	PurchaseStoreManager purchaseManager = null;
 
-	public StoreDispenserAgentImpl() {
+	public DispenserApiImpl() {
 		cashManager = CashStoreManager.getInstance();
 		productManager = ProductStoreManager.getInstance();
 		purchaseManager = PurchaseStoreManager.getInstance();
@@ -94,7 +93,7 @@ public class StoreDispenserAgentImpl implements StoreDispenserAgent {
 		for (CashEnum key : keys) {
 			if (balance >= key.getValue()) {
 				count = cashStore.get(key);
-				balance = new TestChangeReturnAlgorithm().getBalance(cashStore, changeDenomiations, key, balance, count);
+				balance = findChange(cashStore, changeDenomiations, key, balance, count);
 			}
 		}
 		if (balance > 0) {

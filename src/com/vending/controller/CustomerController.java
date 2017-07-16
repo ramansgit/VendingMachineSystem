@@ -1,11 +1,13 @@
 package com.vending.controller;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
-import com.vending.agent.StoreDispenserAgentImpl;
+import com.vending.agent.DispenserApiImpl;
 import com.vending.api.CustomerApi;
 import com.vending.customer.cart.CashCollector;
 import com.vending.customer.cart.SelectedItemsCart;
@@ -30,23 +32,14 @@ public class CustomerController implements CustomerApi {
 	 */
 	SelectedItemsCart selectedCart = null;
 	CashCollector cashCollector = null;
-	StoreDispenserAgentImpl storeAgent = null;
+	DispenserApiImpl storeAgent = null;
 
 	public CustomerController() {
 		selectedCart = SelectedItemsCart.getInstance();
 		cashCollector = CashCollector.getInstance();
-		storeAgent = new StoreDispenserAgentImpl();
-		// initalize customer store
-		initalize();
+		storeAgent = new DispenserApiImpl();
 	}
 
-	/**
-	 * initalize customer store
-	 */
-	private void initalize() {
-		selectedCart.resetSelectionCart();
-		cashCollector.resetUserCashStore();
-	}
 
 	/**
 	 * allows customer to view available products from the store
@@ -95,9 +88,15 @@ public class CustomerController implements CustomerApi {
 		selectedCart.resetSelectionCart();
 		// refund user cash store
 		Map<CashEnum, Integer> userCashStore = cashCollector.getCashFromUserStore();
+		Map<CashEnum, Integer> refund = new TreeMap<CashEnum, Integer>(Collections.reverseOrder());
+		
+		refund.putAll(userCashStore);
+	
 		// reset user cash store
 		cashCollector.resetUserCashStore();
-		return userCashStore;
+		
+		System.out.println(refund);
+		return refund;
 
 	}
 
@@ -164,13 +163,17 @@ public class CustomerController implements CustomerApi {
 	@Override
 	public void updateSelectedItemQty(String productId, int qty) {
 		if (productId != null && !productId.isEmpty()) {
-
-			Item it = selectedCart.getSelectedItemsFromCart().get(productId);
-			if (it != null) {
-				it.setQty(qty);
-				selectedCart.getSelectedItemsFromCart().put(productId, it);
+			if (selectedCart.hasProductItem(productId)) {
+				System.out.println("updating product qty");
+				Item it = selectedCart.getProduct(productId);
+				if (it != null) {
+					it.setQty(qty);
+					selectedCart.getSelectedItemsFromCart().put(productId, it);
+				}
 			}
+
 		}
+
 
 	}
 

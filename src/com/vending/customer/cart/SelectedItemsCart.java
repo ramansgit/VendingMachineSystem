@@ -97,6 +97,18 @@ public class SelectedItemsCart {
 		}
 		return total;
 	}
+	
+	/**
+	 * checks wretreurns product by id
+	 * @param productId
+	 * @return
+	 */
+	public Item getProduct(String productId) {
+		if (productId != null && !productId.isEmpty()) {
+			return selectedCart.get(productId);
+		}
+		return null;
+	}
 
 	/**
 	 * when user clears selection cart

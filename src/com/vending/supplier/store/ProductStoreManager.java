@@ -73,12 +73,34 @@ public class ProductStoreManager {
 		}
 		return false;
 	}
+	
+	/**
+	 * checks wretreurns product by id
+	 * @param productId
+	 * @return
+	 */
+	public Item getProduct(String productId) {
+		if (productId != null && !productId.isEmpty()) {
+			return itemsFromStore.get(productId);
+		}
+		return null;
+	}
 
 	/**
 	 * reset item store
 	 */
 	public void resetStore() {
 		itemsFromStore.clear();
+	}
+	public static void main(String[] args) {
+		ProductStoreManager manager = ProductStoreManager.getInstance();
+		manager.addItemToStore(new Item("AA","coke",10,20));
+		
+		System.out.println(manager.getItemsFromStore());
+		
+		System.out.println(manager.hasProductItem("AA"));
+		
+		System.out.println(manager.getProduct("AA"));
 	}
 
 }

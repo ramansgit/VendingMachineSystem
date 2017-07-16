@@ -100,8 +100,10 @@ public class TestCustomerInterface {
 			System.out.println("removed product from cart\n");
 		}
 		if (value == 17) {
-			insertCashForPurchase(CashEnum.FIFTY, 5);
-			insertCashForPurchase(CashEnum.TEN, 10);
+			int payable = viewPayableAmount();
+			System.out.println("payable amount" + payable);
+			insertCashForPurchase(CashEnum.FIFTY, 4);
+			insertCashForPurchase(CashEnum.TEN, 4);
 			insertCashForPurchase(CashEnum.FIVE, 2);
 		}
 		if (value == 18) {
