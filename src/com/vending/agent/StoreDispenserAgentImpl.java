@@ -149,7 +149,7 @@ public class StoreDispenserAgentImpl implements StoreDispenserAgent {
 			for (CashEnum key : keys) {
 				if (balance >= key.getValue()) {
 					count = cashStore.get(key);
-					balance = getBalance(cashStore, changeDenomiations, key, balance, count);
+					balance = findChange(cashStore, changeDenomiations, key, balance, count);
 				}
 			}
 			if (balance > 0) {
@@ -175,7 +175,7 @@ public class StoreDispenserAgentImpl implements StoreDispenserAgent {
 	 * @param count
 	 * @return
 	 */
-	public int getBalance(Map<CashEnum, Integer> cash,Map<CashEnum, Integer> changeDenomiations, CashEnum type, int balance, int count) {
+	public int findChange(Map<CashEnum, Integer> cash,Map<CashEnum, Integer> changeDenomiations, CashEnum type, int balance, int count) {
 		// 0, 1,2 ,3 ,4 ,5
 		int denomination = type.getValue();
 		int div = balance / denomination; // 1,2,3,4,5...
