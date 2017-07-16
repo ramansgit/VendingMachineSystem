@@ -9,10 +9,9 @@ import java.util.Set;
 import com.vending.api.SupplierApi;
 import com.vending.controller.SupplierController;
 import com.vending.exception.ProductExistException;
-import com.vending.model.Cash;
+import com.vending.model.CashEnum;
 import com.vending.model.Item;
 import com.vending.test.util.TestReadFromCsvUtil;
-import com.vending.utils.CashEnum;
 
 public class TestVendingMachineiInterface {
 	SupplierApi api = new SupplierController();
@@ -23,7 +22,7 @@ public class TestVendingMachineiInterface {
 	}
 
 	public void testViewCashDenominationsFromStore() {
-		Map<CashEnum, Cash> cash = api.viewCashDenominations();
+		Map<CashEnum, Integer> cash = api.viewCashDenominations();
 		System.out.println("available cash denominations are \n" + cash);
 	}
 
@@ -32,8 +31,8 @@ public class TestVendingMachineiInterface {
 
 	}
 
-	public void testAddCashWithDenominations(Cash cash) {
-		api.addCashWithDenominations(cash);
+	public void testAddCashWithDenominations(CashEnum cash, int count) {
+		api.addCashWithDenominations(cash, count);
 
 	}
 
@@ -85,10 +84,12 @@ public class TestVendingMachineiInterface {
 					System.out.println("products added successfully");
 				}
 				if (input != null && input.equals("2")) {
-					Set<Cash> cashItems = TestReadFromCsvUtil.readCashAndDenominationsFromCsv();
-					for (Cash it : cashItems) {
+					Map<CashEnum, Integer> cashItems = TestReadFromCsvUtil.readCashAndDenominationsFromCsv();
+
+					Set<CashEnum> keys = cashItems.keySet();
+					for (CashEnum it : keys) {
 						try {
-							test.testAddCashWithDenominations(it);
+							test.testAddCashWithDenominations(it, cashItems.get(it));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

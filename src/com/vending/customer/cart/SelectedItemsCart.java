@@ -17,7 +17,8 @@ public class SelectedItemsCart {
 
 	public static SelectedItemsCart instance = null;
 	/**
-	 * selected items for the transaction will be managed in this cart
+	 * selected items for the transaction will be managed in this cart and
+	 * insertion order will be maintained
 	 */
 	private Map<String, Item> selectedCart = new LinkedHashMap<String, Item>();
 
@@ -84,8 +85,8 @@ public class SelectedItemsCart {
 	 * 
 	 * @return
 	 */
-	public int getPayableAmount() {
-		int total = 0;
+	public long getPayableAmount() {
+		long total = 0;
 		if (selectedCart != null) {
 			Set<String> keys = selectedCart.keySet();
 			for (String key : keys) {
@@ -98,6 +99,13 @@ public class SelectedItemsCart {
 			}
 		}
 		return total;
+	}
+
+	/**
+	 * when user clears selection cart
+	 */
+	public void resetSelectionCart() {
+		selectedCart.clear();
 	}
 
 }

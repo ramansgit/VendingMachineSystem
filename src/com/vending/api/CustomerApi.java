@@ -3,8 +3,8 @@ package com.vending.api;
 import java.util.Map;
 
 import com.vending.exception.ProductExistException;
+import com.vending.model.CashEnum;
 import com.vending.model.Item;
-import com.vending.utils.CashEnum;
 
 public interface CustomerApi {
 
@@ -26,7 +26,7 @@ public interface CustomerApi {
 	 * get payable amount from selected item cart
 	 * 
 	 */
-	public abstract int viewPayableAmount();
+	public abstract long viewPayableAmount();
 
 	/**
 	 * allows customer to add product item to cart
@@ -40,11 +40,17 @@ public interface CustomerApi {
 	 * 
 	 * @return
 	 */
-	public abstract void collectCashForPurchase(CashEnum denomination,int amount);
+	public abstract void insertCashForPurchase(CashEnum denomination,int amount);
+	
+	
+	/** 
+	 * allows customer to collect item and change if any for the purchase
+	 */
+	public abstract void collectItemAndChange();
 
 	/**
 	 * allows customer to cancel purchase and gets refund
 	 */
-	public abstract void cancelItemsFromCartAndRefund();
+	public abstract Map<CashEnum,Integer> cancelItemsFromCartAndRefund();
 
 }

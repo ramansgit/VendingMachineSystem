@@ -1,11 +1,9 @@
 package com.vending.supplier.store;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.vending.model.Cash;
-import com.vending.utils.CashEnum;
+import com.vending.model.CashEnum;
 
 /**
  * CashStoreManager to manage cash in the system
@@ -17,7 +15,7 @@ import com.vending.utils.CashEnum;
 public class CashStoreManager {
 
 	public static CashStoreManager instance = null;
-	private Map<CashEnum, Cash> cashFromStore = new HashMap<CashEnum, Cash>();
+	private Map<CashEnum, Integer> cashFromStore = new HashMap<CashEnum, Integer>();
 
 	private CashStoreManager() {
 
@@ -40,7 +38,7 @@ public class CashStoreManager {
 	 * 
 	 * @return
 	 */
-	public Map<CashEnum, Cash> getCashFromStore() {
+	public Map<CashEnum, Integer> getCashFromStore() {
 		return cashFromStore;
 	}
 
@@ -49,10 +47,10 @@ public class CashStoreManager {
 	 * 
 	 * @param item
 	 */
-	public void addCashToStore(Cash cash) {
+	public void addCashToStore(CashEnum cash,int count) {
 
-		if (cash != null && cash.getDenominations() != null) {
-			cashFromStore.put(cash.getDenominations(), cash);
+		if (cash != null) {
+			cashFromStore.put(cash, count);
 		}
 
 	}

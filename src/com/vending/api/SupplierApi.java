@@ -3,9 +3,8 @@ package com.vending.api;
 import java.util.Map;
 
 import com.vending.exception.ProductExistException;
-import com.vending.model.Cash;
+import com.vending.model.CashEnum;
 import com.vending.model.Item;
-import com.vending.utils.CashEnum;
 
 public interface SupplierApi {
 	
@@ -25,14 +24,14 @@ public interface SupplierApi {
 	/**
 	 * allows supplier to add denominations to the case store
 	 */
-	public abstract void addCashWithDenominations(Cash cash);
+	public abstract void addCashWithDenominations(CashEnum casg,int count);
 	
 	
 	/** 
 	 * allows supplier to view denominations and qty from cash store
 	 */
 	
-	public abstract Map<CashEnum,Cash> viewCashDenominations();
+	public abstract Map<CashEnum,Integer> viewCashDenominations();
 	
 	/**
 	 * allows supplier to view all purchase history 

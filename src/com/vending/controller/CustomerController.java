@@ -2,13 +2,13 @@ package com.vending.controller;
 
 import java.util.Map;
 
+import com.vending.agent.StoreAgentImpl;
 import com.vending.api.CustomerApi;
 import com.vending.customer.cart.CashCollector;
 import com.vending.customer.cart.SelectedItemsCart;
 import com.vending.exception.ProductExistException;
+import com.vending.model.CashEnum;
 import com.vending.model.Item;
-import com.vending.supplier.store.ProductStoreManager;
-import com.vending.utils.CashEnum;
 
 /**
  * allows customer to perform actions, view products add products to cart add
@@ -22,14 +22,14 @@ public class CustomerController implements CustomerApi {
 	/**
 	 * creates instance of productStore Manager
 	 */
-	ProductStoreManager itemManger = null;
 	SelectedItemsCart selectedCart = null;
 	CashCollector cashCollector = null;
+	StoreAgentImpl storeAgent = null;
 
 	public CustomerController() {
-		itemManger = ProductStoreManager.getInstance();
 		selectedCart = SelectedItemsCart.getInstance();
 		cashCollector = CashCollector.getInstance();
+		storeAgent = new StoreAgentImpl();
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class CustomerController implements CustomerApi {
 	 */
 	@Override
 	public Map<String, Item> viewProductItemsFromStore() {
-		return itemManger.getItemsFromStore();
+		return storeAgent.viewProductItemsFromStore();
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class CustomerController implements CustomerApi {
 	}
 
 	@Override
-	public int viewPayableAmount() {
+	public long viewPayableAmount() {
 		return selectedCart.getPayableAmount();
 	}
 
@@ -66,18 +66,43 @@ public class CustomerController implements CustomerApi {
 	 * allows user to pay for the purchase
 	 */
 	@Override
-	public void collectCashForPurchase(CashEnum denomination, int amountPaid) {
-		cashCollector.processUserCash(denomination, amountPaid);
+	public void insertCashForPurchase(CashEnum denomination, int amountPaid) {
+		cashCollector.addCashToUserStore(denomination, amountPaid);
 	}
 
 	/**
 	 * allows user to cancel purchase and get refund if applicable
 	 */
 	@Override
-	public void cancelItemsFromCartAndRefund() {
+	public Map<CashEnum, Integer> cancelItemsFromCartAndRefund() {
+		// reset selection cart
+		selectedCart.resetSelectionCart();
+		// refund user cash store
+		Map<CashEnum, Integer> userCashStore = cashCollector.getCashFromUserStore();
+		// reset user cash store
+		cashCollector.resetUserCashStore();
+		return userCashStore;
 
-		
-		
+	}
+
+	/**
+	 * when user confirms to complete the purchase this will be invoked
+	 */
+
+	@Override
+	public void collectItemAndChange() {
+
+		// check amount paid is < than payable return exception
+		long total = selectedCart.getPayableAmount();
+
+		// if amount paid == payable return item and invoke dispenser for
+
+		// if amount paid > payable then check change
+		// if change available return item and change
+
+		// else return exception change not available ask user to purchase
+		// something or ask for refund
+
 	}
 
 }

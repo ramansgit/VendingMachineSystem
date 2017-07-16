@@ -4,12 +4,11 @@ import java.util.Map;
 
 import com.vending.api.SupplierApi;
 import com.vending.exception.ProductExistException;
-import com.vending.model.Cash;
+import com.vending.model.CashEnum;
 import com.vending.model.Item;
 import com.vending.supplier.store.CashStoreManager;
 import com.vending.supplier.store.ProductStoreManager;
 import com.vending.supplier.store.PurchaseStoreManager;
-import com.vending.utils.CashEnum;
 
 /**
  * supplier is responsible for, loads products into product store loads cash
@@ -63,8 +62,8 @@ public class SupplierController implements SupplierApi {
 	 * add cash to the system with denominations
 	 */
 	@Override
-	public void addCashWithDenominations(Cash cash)  {
-		cashManager.addCashToStore(cash);
+	public void addCashWithDenominations(CashEnum cash,int count)  {
+		cashManager.addCashToStore(cash,count);
 	}
 
 	/**
@@ -91,7 +90,7 @@ public class SupplierController implements SupplierApi {
 	 */
 
 	@Override
-	public Map<CashEnum, Cash> viewCashDenominations() {
+	public Map<CashEnum, Integer> viewCashDenominations() {
 		return cashManager.getCashFromStore();
 	}
 

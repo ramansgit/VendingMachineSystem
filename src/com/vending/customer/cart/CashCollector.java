@@ -1,10 +1,11 @@
 package com.vending.customer.cart;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-import com.vending.model.Cash;
-import com.vending.utils.CashEnum;
+import com.vending.model.CashEnum;
+import com.vending.model.Item;
 
 /**
  * class responsible for managing user cash for the transaction.
@@ -18,7 +19,7 @@ public class CashCollector {
 	/**
 	 * collects user cash for the transaction
 	 */
-	private List<Cash> userCashBox = new ArrayList<Cash>();
+	private Map<CashEnum,Integer> userCashStore = new HashMap<CashEnum,Integer>();
 
 	private CashCollector() {
 
@@ -41,42 +42,47 @@ public class CashCollector {
 	 * 
 	 * @return
 	 */
-	public List<Cash> getCashFromUserBox() {
-		return userCashBox;
+	public Map<CashEnum,Integer> getCashFromUserStore() {
+		return userCashStore;
 	}
 
 	/**
-	 * add cash to userbox during cash insertion
+	 * add cash to userCashStore during cash insertion
 	 * 
 	 * @param item
 	 */
-	public void addCashToUserBox(Cash cash) {
-		userCashBox.add(cash);
+	public void addCashToUserStore(CashEnum cash,int count) {
+		userCashStore.put(cash, count);
 	}
 
 	/**
-	 * process user cash in cash collector
-	 * 
-	 * @param denomination
-	 * @param amountPaid
+	 * reset user cash store when user ask for refund or transaction done
 	 */
-	public void processUserCash(CashEnum denomination, int amountPaid) {
-		int totalPayable = SelectedItemsCart.getInstance().getPayableAmount();
-		if (amountPaid == totalPayable) {
-			// take user confirmation and dispense item
-		}
-		if (amountPaid < totalPayable) {
-			// add paid to user cash box
-			// find balance and ask for more cash
-		}
-		if (amountPaid > totalPayable) {
-			// find balance and check denomination available in cash store
-			// if yes add cash to user cash box
-			// return balance
-			// if no ask user to user to pay other denominations
-		}
+	public void resetUserCashStore() {
+		userCashStore.clear();
 	}
 
+	
+	/**
+	 * find the total amount user paid for the purchase
+	 * 
+	 * @return
+	 */
+//	public long getTotalPaidAmount() {
+//		long total = 0;
+//		if (selectedCart != null) {
+//			Set<String> keys = selectedCart.keySet();
+//			for (String key : keys) {
+//				Item it = selectedCart.get(key);
+//				if (it != null) {
+//					int qty = it.getQty();
+//					int price = it.getPrice();
+//					total = total + (qty * price);
+//				}
+//			}
+//		}
+//		return total;
+//	}
 	
 
 }

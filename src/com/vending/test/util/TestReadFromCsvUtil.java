@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-import com.vending.model.Cash;
+import com.vending.model.CashEnum;
 import com.vending.model.Item;
-import com.vending.utils.CashEnum;
 
 public class TestReadFromCsvUtil {
 
@@ -53,9 +54,9 @@ public class TestReadFromCsvUtil {
 		return productStore;
 	}
 
-	public static Set<Cash> readCashAndDenominationsFromCsv() {
+	public static Map<CashEnum, Integer> readCashAndDenominationsFromCsv() {
 		String csvFile = "/Users/ramans/Documents/workspace-vendingmachine/VendingMachineSystem/cash.csv";
-		Set<Cash> cashStore = new HashSet<Cash>();
+		Map<CashEnum, Integer> cashStore = new HashMap<CashEnum, Integer>();
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
@@ -64,15 +65,11 @@ public class TestReadFromCsvUtil {
 
 			br = new BufferedReader(new FileReader(csvFile));
 			while ((line = br.readLine()) != null) {
-
 				// use comma as separator
 				String[] cash = line.split(cvsSplitBy);
-				Cash it = new Cash();
+				System.out.println(cash[0]);
 				try {
-					it.setDenominations(CashEnum.valueOf(cash[0]));
-					it.setQty(Integer.parseInt(cash[1]));
-					cashStore.add(it);
-					System.out.println(it);
+					cashStore.put(CashEnum.valueOf(cash[0]), Integer.parseInt(cash[1]));
 				} catch (Exception e) {
 					e.printStackTrace();
 
