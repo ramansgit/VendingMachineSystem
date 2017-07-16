@@ -2,7 +2,7 @@ package com.vending.controller;
 
 import java.util.Map;
 
-import com.vending.agent.StoreAgentImpl;
+import com.vending.agent.StoreDispenserAgentImpl;
 import com.vending.api.CustomerApi;
 import com.vending.customer.cart.CashCollector;
 import com.vending.customer.cart.SelectedItemsCart;
@@ -24,12 +24,12 @@ public class CustomerController implements CustomerApi {
 	 */
 	SelectedItemsCart selectedCart = null;
 	CashCollector cashCollector = null;
-	StoreAgentImpl storeAgent = null;
+	StoreDispenserAgentImpl storeAgent = null;
 
 	public CustomerController() {
 		selectedCart = SelectedItemsCart.getInstance();
 		cashCollector = CashCollector.getInstance();
-		storeAgent = new StoreAgentImpl();
+		storeAgent = new StoreDispenserAgentImpl();
 	}
 
 	/**
