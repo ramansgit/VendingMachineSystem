@@ -20,6 +20,7 @@ purchased.
 6.  Allow reset operation for vending machine supplier.
 
 
+
 Design Approach
 The following 3 interface plays major role in system.
 
