@@ -33,8 +33,7 @@ public class TestSupplierInterface {
 	}
 
 	public void testViewPurchaseHistory() {
-		supplier.viewPurchaseHistory();
-		System.out.println("view purchase statement \n");
+		System.out.println("view purchase statement \n"+supplier.viewPurchaseHistory());
 
 	}
 
@@ -54,7 +53,7 @@ public class TestSupplierInterface {
 	}
 
 	public void viewPurchaseHistory() {
-		supplier.viewPurchaseHistory();
+		System.out.println(supplier.viewPurchaseHistory());
 
 	}
 
@@ -88,7 +87,7 @@ public class TestSupplierInterface {
 			Set<CashEnum> keys = cashItems.keySet();
 			for (CashEnum it : keys) {
 				try {
-					System.out.println(cashItems.get(it));
+					
 					test.testAddCashDenominations(it, cashItems.get(it));
 				} catch (Exception e) {
 					e.printStackTrace();

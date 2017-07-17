@@ -99,8 +99,8 @@ public class DispenserApiImpl implements DispenserApi {
 		if (balance > 0) {
 			throw new NotSufficientChangeException("NotSufficientChange,Please try another product");
 		}
-		System.out.println(cashStore);
-		System.out.println(changeDenomiations);
+		//System.out.println(cashStore);
+		//System.out.println(changeDenomiations);
 
 		// updates cash store once change returned
 		Set<CashEnum> uKeys = cashStore.keySet();
@@ -137,33 +137,31 @@ public class DispenserApiImpl implements DispenserApi {
 	 * returns true if sufficient change found, otherwise returns false when
 	 * change not found
 	 */
-	@Override
-	public boolean hasSufficientChangeForAmount(int changeAmount) {
-		try {
-			int balance = changeAmount;
-			Map<CashEnum, Integer> cashStore = cashManager.getCashFromStore();
-			Map<CashEnum, Integer> changeDenomiations = new TreeMap<>(Collections.reverseOrder());
-			int count = 0;
-			Set<CashEnum> keys = cashStore.keySet();
-			for (CashEnum key : keys) {
-				if (balance >= key.getValue()) {
-					count = cashStore.get(key);
-					balance = findChange(cashStore, changeDenomiations, key, balance, count);
-				}
-			}
-			if (balance > 0) {
-				throw new NotSufficientChangeException("NotSufficientChange,Please try another product");
-			}
-			System.out.println(cashStore);
-			System.out.println(changeDenomiations);
-
-		} catch (NotSufficientChangeException e) {
-			return false;
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
+//	@Override
+//	public boolean hasSufficientChangeForAmount(int changeAmount) {
+//		try {
+//			int balance = changeAmount;
+//			Map<CashEnum, Integer> cashStore = cashManager.getCashFromStore();
+//			Map<CashEnum, Integer> changeDenomiations = new TreeMap<>(Collections.reverseOrder());
+//			int count = 0;
+//			Set<CashEnum> keys = cashStore.keySet();
+//			for (CashEnum key : keys) {
+//				if (balance >= key.getValue()) {
+//					count = cashStore.get(key);
+//					balance = findChange(cashStore, changeDenomiations, key, balance, count);
+//				}
+//			}
+//			if (balance > 0) {
+//				throw new NotSufficientChangeException("NotSufficientChange,Please try another product");
+//			}
+//		
+//		} catch (NotSufficientChangeException e) {
+//			return false;
+//		} catch (Exception e) {
+//			return false;
+//		}
+//		return true;
+//	}
 
 	/**
 	 * find the balance

@@ -41,6 +41,7 @@ public class PurchaseStoreManager {
 	 * @return
 	 */
 	public List<Purchase> getPurchaseStatement() {
+		System.out.println("get purchashe statement");
 		return purchaseStatement;
 	}
 

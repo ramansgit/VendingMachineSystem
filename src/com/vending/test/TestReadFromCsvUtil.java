@@ -67,7 +67,6 @@ public class TestReadFromCsvUtil {
 			while ((line = br.readLine()) != null) {
 				// use comma as separator
 				String[] cash = line.split(cvsSplitBy);
-				System.out.println(cash[0]);
 				try {
 					cashStore.put(CashEnum.valueOf(cash[0]), Integer.parseInt(cash[1]));
 				} catch (Exception e) {

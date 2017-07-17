@@ -41,7 +41,7 @@ public interface DispenserApi {
 	 * @param changeAmount
 	 * @return
 	 */
-	public abstract boolean hasSufficientChangeForAmount(int changeAmount);
+	//public abstract boolean hasSufficientChangeForAmount(int changeAmount);
 	
 	/**
 	 * transfers user cash to supplier cash store

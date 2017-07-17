@@ -40,7 +40,6 @@ public class CustomerController implements CustomerApi {
 		storeAgent = new DispenserApiImpl();
 	}
 
-
 	/**
 	 * allows customer to view available products from the store
 	 */
@@ -89,12 +88,12 @@ public class CustomerController implements CustomerApi {
 		// refund user cash store
 		Map<CashEnum, Integer> userCashStore = cashCollector.getCashFromUserStore();
 		Map<CashEnum, Integer> refund = new TreeMap<CashEnum, Integer>(Collections.reverseOrder());
-		
+
 		refund.putAll(userCashStore);
-	
+
 		// reset user cash store
 		cashCollector.resetUserCashStore();
-		
+
 		System.out.println(refund);
 		return refund;
 
@@ -119,32 +118,36 @@ public class CustomerController implements CustomerApi {
 											// available else return change not
 											// available exception
 			int changeAmount = paidTotal - purchaseTotal;
-			if (storeAgent.hasSufficientChangeForAmount(changeAmount)) {
-				// if change available return item and change
-				dispenseItem = storeAgent.dispenseItemsFromStore(selectedCart.getSelectedItemsFromCart());
+			
+			try {
 				dispenseChange = storeAgent.dispenseChangeFromStore(changeAmount);
-				storeAgent.dispenseUserCashToStore(cashCollector.getCashFromUserStore());
-				// capture purchase summary
-				statement.setCreateDate(new Date());
-				statement.setTotalAmout(selectedCart.getPayableAmount());
-				statement.setPurchasedItems(selectedCart.getSelectedItemsFromCart());
-				statement.setTransactionId(UUID.randomUUID().toString());
-				storeAgent.addPurchaseSummaryToStore(statement);
-				dispense = new DispenseItemAndChange(dispenseChange, dispenseItem);
-
-			} else {
+			} catch (NotSufficientChangeException e) {
 				// else return exception change not available ask user to
 				// purchase
 				// something or ask for refund
 				throw new NotSufficientChangeException("Not Sufficient change in Inventory");
 			}
-		} else {// check amount paid is < than
-				// payable return exception
+			// if (storeAgent.hasSufficientChangeForAmount(changeAmount)) {
+						// if change available return item and change
+			dispenseItem = storeAgent.dispenseItemsFromStore(selectedCart.getSelectedItemsFromCart());
+			
+			storeAgent.dispenseUserCashToStore(cashCollector.getCashFromUserStore());
+			// capture purchase summary
+			statement.setCreateDate(new Date());
+			statement.setTotalAmout(selectedCart.getPayableAmount());
+			statement.setPurchasedItems(selectedCart.getSelectedItemsFromCart());
+			statement.setTransactionId(UUID.randomUUID().toString());
+			storeAgent.addPurchaseSummaryToStore(statement);
+			dispense = new DispenseItemAndChange(dispenseChange, dispenseItem);
+
+		} else{// check amount paid is < than
+			// payable return exception
 			long balance = purchaseTotal - paidTotal;
 			throw new NotFullPaidException("Price not full paid, remaining : ", balance);
 		}
 
 		return dispense;
+
 	}
 
 	/**
@@ -154,8 +157,6 @@ public class CustomerController implements CustomerApi {
 	public int viewPaidAmount() {
 		return cashCollector.getTotalPaidAmount();
 	}
-
-
 
 	/**
 	 * allows customer to update qty for an item in the selectioncart
@@ -173,7 +174,6 @@ public class CustomerController implements CustomerApi {
 			}
 
 		}
-
 
 	}
 

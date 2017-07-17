@@ -1,11 +1,13 @@
 package com.vending.controller;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.vending.api.SupplierApi;
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
+import com.vending.model.Purchase;
 import com.vending.supplier.store.CashStoreManager;
 import com.vending.supplier.store.ProductStoreManager;
 import com.vending.supplier.store.PurchaseStoreManager;
@@ -73,8 +75,8 @@ public class SupplierController implements SupplierApi {
 	 */
 
 	@Override
-	public void viewPurchaseHistory() {
-		purchaseStatement.getPurchaseStatement();
+	public List<Purchase> viewPurchaseHistory() {
+		return purchaseStatement.getPurchaseStatement();
 	}
 
 	/**

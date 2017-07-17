@@ -1,9 +1,11 @@
 package com.vending.api;
 
+import java.util.List;
 import java.util.Map;
 
 import com.vending.model.CashEnum;
 import com.vending.model.Item;
+import com.vending.model.Purchase;
 
 /**
  * interaction between supplier and system are captured here.
@@ -52,7 +54,7 @@ public interface SupplierApi {
 	/**
 	 * allows supplier to view all purchase history 
 	 */
-	public abstract void viewPurchaseHistory();
+	public abstract List<Purchase> viewPurchaseHistory();
 	/**
 	 * allows supplier to reset items, cash and purchase history from store
 	 */

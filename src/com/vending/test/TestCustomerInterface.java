@@ -103,7 +103,7 @@ public class TestCustomerInterface {
 			int payable = viewPayableAmount();
 			System.out.println("payable amount" + payable);
 			insertCashForPurchase(CashEnum.FIFTY, 4);
-			insertCashForPurchase(CashEnum.TEN, 4);
+			insertCashForPurchase(CashEnum.TWENTY, 2);
 			insertCashForPurchase(CashEnum.FIVE, 2);
 		}
 		if (value == 18) {
