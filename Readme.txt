@@ -65,7 +65,6 @@ Next Release focus ..
 - Purchase statement can be in better format
 - this can be persisted in db. 
 - more validations should be done
-- Assumption only either consumer or supplier will access the system.
 - concurrent access not tested 
 
 
